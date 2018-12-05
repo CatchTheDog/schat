@@ -1,8 +1,10 @@
 package com.majq.schat.component;
 
 import com.majq.schat.CFrame;
+import com.majq.schat.constant.FrameConstant;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -14,8 +16,8 @@ import java.awt.event.*;
  * @since 2018/12/5 9:45
  */
 public class ChatContentInputComponent extends JComponent {
-    private static final int DEFAULT_WIDTH = 600;
-    private static final int DEFAULT_HEIGHT = 130;
+    private static final int DEFAULT_WIDTH = FrameConstant.DEFAULT_WIDTH * 60 / 100;
+    private static final int DEFAULT_HEIGHT = FrameConstant.DEFAULT_HEIGHT * 15 / 100;
     private CFrame mainFrame;
     //聊天内容输入框
     private JTextArea contentInput;
@@ -26,7 +28,7 @@ public class ChatContentInputComponent extends JComponent {
 
     public ChatContentInputComponent(CFrame jFrame) {
         this.mainFrame = jFrame;
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "信息输入"));
         this.setLayout(new BorderLayout());
         initChatContentInput();
     }
@@ -43,13 +45,14 @@ public class ChatContentInputComponent extends JComponent {
      * 添加文本输入框
      */
     private void addTextArea() {
-        contentInput = new JTextArea(5, 40);
+        contentInput = new JTextArea(3, 40);
+        contentInput.setBorder(BorderFactory.createEtchedBorder());
         contentInput.setFont(new Font("楷体", Font.PLAIN, 12));
         contentInput.setLineWrap(true);
         contentInput.setText("说点什么吧...");
         contentInput.addInputMethodListener(new ContentInputListener());
         contentInput.addFocusListener(new ContentInputFocusListener());
-        this.add(contentInput, BorderLayout.NORTH);
+        this.add(contentInput, BorderLayout.CENTER);
     }
 
     /**
@@ -57,11 +60,19 @@ public class ChatContentInputComponent extends JComponent {
      */
     private void addButton() {
         JPanel jPanel = new JPanel();
-        jPanel.setLayout(new GridLayout(1, 2));
+        jPanel.setOpaque(false);
+        jPanel.setLayout(new FlowLayout());
+        jPanel.setBorder(BorderFactory.createEtchedBorder());
         this.sendMessage = new JButton("发送");
+        this.sendMessage.setPreferredSize(new Dimension(60, 30));
         this.sendMessage.addActionListener(new SendMessageListener());
+        this.sendMessage.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED));
+        this.sendMessage.setFont(new Font("楷体", Font.BOLD, 14));
         this.clearMessage = new JButton("清空");
+        this.clearMessage.setPreferredSize(new Dimension(60, 30));
         this.clearMessage.addActionListener(new ClearMessageListener());
+        this.clearMessage.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED));
+        this.clearMessage.setFont(new Font("楷体", Font.BOLD, 14));
         jPanel.add(sendMessage);
         jPanel.add(clearMessage);
         this.add(jPanel, BorderLayout.SOUTH);
@@ -77,6 +88,15 @@ public class ChatContentInputComponent extends JComponent {
     }
 
     /**
+     * 重置输入框内容
+     */
+    public void resetInputContent() {
+        contentInput.setFont(new Font("楷体", Font.PLAIN, 12));
+        contentInput.setLineWrap(true);
+        contentInput.setText("说点什么吧...");
+    }
+
+    /**
      * 发送信息事件监听器
      */
     private class SendMessageListener implements ActionListener {
@@ -87,7 +107,7 @@ public class ChatContentInputComponent extends JComponent {
                 CFrame cFrame = getMainFrame();
                 ChatContentShowComponent chatContentShow = cFrame.getMainRightComponent().getMainRightCenter().getChatContentShow();
                 chatContentShow.appendContent("我说：" + contentInput.getText());
-                contentInput.setText("");
+                resetInputContent();
             }
         }
     }
@@ -99,8 +119,7 @@ public class ChatContentInputComponent extends JComponent {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (null != contentInput.getText()) {
-                //清空当前输入的信息
-                contentInput.setText("");
+                resetInputContent();
             }
         }
     }
@@ -111,7 +130,9 @@ public class ChatContentInputComponent extends JComponent {
     private class ContentInputListener implements InputMethodListener {
         @Override
         public void inputMethodTextChanged(InputMethodEvent event) {
-            System.out.println("触发事件inputMethodTextChanged了！");
+            if (contentInput.getText().length() > 90) {
+                contentInput.append("...");
+            }
         }
 
         @Override
@@ -132,7 +153,9 @@ public class ChatContentInputComponent extends JComponent {
 
         @Override
         public void focusLost(FocusEvent e) {
-
+            if (null == contentInput.getText() || contentInput.getText().trim().length() == 0) {
+                resetInputContent();
+            }
         }
     }
 }

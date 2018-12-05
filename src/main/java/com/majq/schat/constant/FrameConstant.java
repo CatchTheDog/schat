@@ -25,5 +25,5 @@ public interface FrameConstant {
      */
     int DEFAULT_LOCATION_Y = SCREEN_SIZE.height * 10 / 100;
 
-    String ICON_IMAGE_PATH = "";
+    String ICON_IMAGE_PATH = "/image/logo.jpg";
 }

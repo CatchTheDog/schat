@@ -4,9 +4,11 @@ import com.majq.schat.component.HeadPortraitComponent;
 import com.majq.schat.component.MainFrameMenuBar;
 import com.majq.schat.component.MainRightComponent;
 import com.majq.schat.constant.FrameConstant;
+import com.majq.schat.utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * 主窗口
@@ -17,6 +19,7 @@ import java.awt.*;
  */
 public class CFrame extends JFrame {
     private MainRightComponent mainRightComponent;
+
     /**
      * 窗口初始化
      */
@@ -31,8 +34,22 @@ public class CFrame extends JFrame {
      */
     public static void startUp() {
         EventQueue.invokeLater(() -> {
-            CFrame cFrame = new CFrame();
+            new CFrame();
+            //setModel();
         });
+    }
+
+    /**
+     * 切换观感
+     */
+    private static void setModel() {
+        try {
+            UIManager.LookAndFeelInfo[] infos = UIManager.getInstalledLookAndFeels();
+            Arrays.stream(infos).forEach(x -> System.out.println(x.getClassName()));
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            System.out.println("set frame model failed!");
+        }
     }
 
     /**
@@ -50,7 +67,7 @@ public class CFrame extends JFrame {
     private void addComponent() {
         this.setLayout(new BorderLayout());
         //聊天对象头像展示栏
-        this.add(HeadPortraitComponent.getHeadPortraitComponent(), BorderLayout.WEST);
+        this.add(new HeadPortraitComponent(), BorderLayout.WEST);
         this.mainRightComponent = new MainRightComponent(this);
         this.add(mainRightComponent, BorderLayout.CENTER);
     }
@@ -74,9 +91,10 @@ public class CFrame extends JFrame {
         this.setTitle(FrameConstant.TITLE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(FrameConstant.DEFAULT_LOCATION_X, FrameConstant.DEFAULT_LOCATION_Y);
-        //this.setIconImage();
-        this.setVisible(true);
+        this.setIconImage(ImageUtils.loadImage(FrameConstant.ICON_IMAGE_PATH));
+        this.getContentPane().setBackground(new Color(255, 255, 255));
         this.pack();
+        this.setVisible(true);
     }
 
     public MainRightComponent getMainRightComponent() {

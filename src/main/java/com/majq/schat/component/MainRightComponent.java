@@ -19,9 +19,9 @@ public class MainRightComponent extends JComponent {
         //jPanelCenter.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.setLayout(new BorderLayout());
         //功能菜单栏
-        this.add(FunctionalBarComponent.getFunctionalBar(), BorderLayout.NORTH);
+        this.add(new FunctionalBarComponent(), BorderLayout.NORTH);
         //右侧-右侧边栏
-        this.add(OthersideShowComponent.getOthersideShow(), BorderLayout.EAST);
+        this.add(new OthersideShowComponent(), BorderLayout.EAST);
         this.mainRightCenter = new MainRightCenterComponent(frame);
         this.add(mainRightCenter, BorderLayout.CENTER);
     }
@@ -29,4 +29,5 @@ public class MainRightComponent extends JComponent {
     public MainRightCenterComponent getMainRightCenter() {
         return this.mainRightCenter;
     }
+
 }
