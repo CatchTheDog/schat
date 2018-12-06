@@ -1,7 +1,7 @@
 package com.majq.schat.component;
 
-import com.majq.schat.CFrame;
 import com.majq.schat.constant.FrameConstant;
+import com.majq.schat.netservice.NetServer;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -18,7 +18,6 @@ import java.awt.event.*;
 public class ChatContentInputComponent extends JComponent {
     private static final int DEFAULT_WIDTH = FrameConstant.DEFAULT_WIDTH * 60 / 100;
     private static final int DEFAULT_HEIGHT = FrameConstant.DEFAULT_HEIGHT * 15 / 100;
-    private CFrame mainFrame;
     //聊天内容输入框
     private JTextArea contentInput;
     //消息发送按钮
@@ -26,8 +25,8 @@ public class ChatContentInputComponent extends JComponent {
     //消息清除按钮
     private JButton clearMessage;
 
-    public ChatContentInputComponent(CFrame jFrame) {
-        this.mainFrame = jFrame;
+
+    public ChatContentInputComponent() {
         this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "信息输入"));
         this.setLayout(new BorderLayout());
         initChatContentInput();
@@ -55,7 +54,6 @@ public class ChatContentInputComponent extends JComponent {
         contentInput.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                System.out.println("触发keyTyped事件了。");
                 if (contentInput.getText().length() > 90) {
                     e.setKeyChar('\0');
                     System.out.println("输入字符大于90字符了。");
@@ -103,10 +101,6 @@ public class ChatContentInputComponent extends JComponent {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
-    public CFrame getMainFrame() {
-        return mainFrame;
-    }
-
     /**
      * 重置输入框内容
      */
@@ -122,10 +116,13 @@ public class ChatContentInputComponent extends JComponent {
     private class SendMessageListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            ChatContentShowComponent chatContentShow = MainFrame.loadUI().getMainRightComponent().getMainRightCenter().getChatContentShow();
             if (null != contentInput.getText()) {
+                //发送消息给对方 需要将消息写入到socket中，但是此处无法获取在socket.
+                NetServer.socketMap.forEach((k, v) -> {
+                    v.sendMessage(contentInput.getText());
+                });
                 //在历史消息区展示此消息
-                CFrame cFrame = getMainFrame();
-                ChatContentShowComponent chatContentShow = cFrame.getMainRightComponent().getMainRightCenter().getChatContentShow();
                 chatContentShow.appendContent("我说：" + contentInput.getText());
                 resetInputContent();
             }

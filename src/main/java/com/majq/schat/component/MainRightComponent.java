@@ -1,7 +1,5 @@
 package com.majq.schat.component;
 
-import com.majq.schat.CFrame;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,14 +13,14 @@ import java.awt.*;
 public class MainRightComponent extends JComponent {
     private MainRightCenterComponent mainRightCenter;
 
-    public MainRightComponent(CFrame frame) {
+    public MainRightComponent() {
         //jPanelCenter.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.setLayout(new BorderLayout());
         //功能菜单栏
         this.add(new FunctionalBarComponent(), BorderLayout.NORTH);
         //右侧-右侧边栏
         this.add(new OthersideShowComponent(), BorderLayout.EAST);
-        this.mainRightCenter = new MainRightCenterComponent(frame);
+        this.mainRightCenter = new MainRightCenterComponent();
         this.add(mainRightCenter, BorderLayout.CENTER);
     }
 

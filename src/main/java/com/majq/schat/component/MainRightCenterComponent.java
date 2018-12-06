@@ -1,8 +1,6 @@
 package com.majq.schat.component;
 
 
-import com.majq.schat.CFrame;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,13 +15,13 @@ public class MainRightCenterComponent extends JComponent {
     private ChatContentShowComponent chatContentShow;
     private ChatContentInputComponent chatContentInput;
 
-    public MainRightCenterComponent(CFrame jFrame) {
+    public MainRightCenterComponent() {
         this.setLayout(new BorderLayout());
         //聊天历史内容展示栏
         this.chatContentShow = new ChatContentShowComponent();
         this.add(this.chatContentShow, BorderLayout.CENTER);
         //聊天内容输入栏
-        this.chatContentInput = new ChatContentInputComponent(jFrame);
+        this.chatContentInput = new ChatContentInputComponent();
         this.add(this.chatContentInput, BorderLayout.SOUTH);
     }
 

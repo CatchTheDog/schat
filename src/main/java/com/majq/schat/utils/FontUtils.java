@@ -19,7 +19,7 @@ public class FontUtils {
     /**
      * 获取本机可用字体
      *
-     * @return
+     * @return 本机可用字体列表
      */
     public static String[] getAvalibleFonts() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
@@ -65,6 +65,9 @@ public class FontUtils {
         return new FontUtils.FontDescriptor(messasge, g2, font);
     }
 
+    /**
+     * 字体描述符
+     */
     public static class FontDescriptor {
         private String messsage;//字符串
         private double width;//字符串宽度

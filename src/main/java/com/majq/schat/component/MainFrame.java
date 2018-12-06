@@ -1,8 +1,5 @@
-package com.majq.schat;
+package com.majq.schat.component;
 
-import com.majq.schat.component.HeadPortraitComponent;
-import com.majq.schat.component.MainFrameMenuBar;
-import com.majq.schat.component.MainRightComponent;
 import com.majq.schat.constant.FrameConstant;
 import com.majq.schat.utils.ImageUtils;
 
@@ -17,26 +14,34 @@ import java.util.Arrays;
  * @version 1.0.0
  * @since 2018/12/4 17:09
  */
-public class CFrame extends JFrame {
+public class MainFrame extends JFrame {
     private MainRightComponent mainRightComponent;
+    private static MainFrame mainFrame;
+    private static Object lock = new Object();
 
     /**
      * 窗口初始化
      */
-    public CFrame() {
+    private MainFrame() {
         initCFrame();
         addMenuBar();
         addComponent();
     }
 
     /**
-     * 主窗口启动类，程序入口在此处
+     * UI初始化
+     * @return
      */
-    public static void startUp() {
-        EventQueue.invokeLater(() -> {
-            new CFrame();
-            //setModel();
-        });
+    public static MainFrame loadUI() {
+        if (null == mainFrame) {
+            synchronized (lock) {
+                if (null == mainFrame)
+                    EventQueue.invokeLater(() -> {
+                        mainFrame = new MainFrame();
+                    });
+            }
+        }
+        return mainFrame;
     }
 
     /**
@@ -53,22 +58,13 @@ public class CFrame extends JFrame {
     }
 
     /**
-     * 测试
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        startUp();
-    }
-
-    /**
      * 增加主窗口其他组件：聊天内容展示、聊天对象头像展示、聊天对象信息展示，聊天信息输入框、聊天信息发送按钮
      */
     private void addComponent() {
         this.setLayout(new BorderLayout());
         //聊天对象头像展示栏
         this.add(new HeadPortraitComponent(), BorderLayout.WEST);
-        this.mainRightComponent = new MainRightComponent(this);
+        this.mainRightComponent = new MainRightComponent();
         this.add(mainRightComponent, BorderLayout.CENTER);
     }
 
