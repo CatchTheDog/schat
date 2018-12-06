@@ -50,8 +50,28 @@ public class ChatContentInputComponent extends JComponent {
         contentInput.setFont(new Font("楷体", Font.PLAIN, 12));
         contentInput.setLineWrap(true);
         contentInput.setText("说点什么吧...");
-        contentInput.addInputMethodListener(new ContentInputListener());
+        //contentInput.addInputMethodListener(new ContentInputListener());
         contentInput.addFocusListener(new ContentInputFocusListener());
+        contentInput.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                System.out.println("触发keyTyped事件了。");
+                if (contentInput.getText().length() > 90) {
+                    e.setKeyChar('\0');
+                    System.out.println("输入字符大于90字符了。");
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         this.add(contentInput, BorderLayout.CENTER);
     }
 
@@ -127,19 +147,19 @@ public class ChatContentInputComponent extends JComponent {
     /**
      * 文本框开始输入监听器
      */
-    private class ContentInputListener implements InputMethodListener {
-        @Override
-        public void inputMethodTextChanged(InputMethodEvent event) {
-            if (contentInput.getText().length() > 90) {
-                contentInput.append("...");
-            }
-        }
-
-        @Override
-        public void caretPositionChanged(InputMethodEvent event) {
-            System.out.println("触发事件caretPositionChanged了！");
-        }
-    }
+//    private class ContentInputListener implements InputMethodListener {
+//        @Override
+//        public void inputMethodTextChanged(InputMethodEvent event) {
+//            if (contentInput.getText().length() > 90) {
+//                contentInput.append("...");
+//            }
+//        }
+//
+//        @Override
+//        public void caretPositionChanged(InputMethodEvent event) {
+//            System.out.println("触发事件caretPositionChanged了！");
+//        }
+//    }
 
     /**
      * 输入框焦点获取监听器
