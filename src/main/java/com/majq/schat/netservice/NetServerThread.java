@@ -42,7 +42,7 @@ public class NetServerThread implements Runnable {
     @Override
     public void run() {
         try {
-            ChatContentShowComponent chatContentShowComponent = MainFrame.loadUI().getMainRightComponent().getMainRightCenter().getChatContentShow();
+            ChatContentShowComponent chatContentShowComponent = MainFrame.loadMainFrame().getMainRightComponent().getMainRightCenter().getChatContentShow();
             while (this.in.hasNextLine()) {
                 chatContentShowComponent.appendContent(DateUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss") + " 神秘人：" + this.in.nextLine());
             }

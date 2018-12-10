@@ -1,11 +1,14 @@
 package com.majq.schat.component;
 
 import com.majq.schat.constant.FrameConstant;
+import com.majq.schat.netservice.NetServer;
 import com.majq.schat.utils.GBC;
 import com.majq.schat.utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * 登录窗口
@@ -20,6 +23,9 @@ public class LoginFrame extends JFrame {
     private static final int DEFAULT_WIDTH = FrameConstant.SCREEN_SIZE.width * 40 / 100;
     private static final int DEFAULT_HEIGHT = FrameConstant.SCREEN_SIZE.height * 60 / 100;
 
+    private JTextField userNameField;
+    private JPasswordField pwField;
+
     public LoginFrame() {
         this.setBackground(Color.WHITE);
 
@@ -27,41 +33,61 @@ public class LoginFrame extends JFrame {
         JLabel jLabel = new JLabel(imageIcon);
         JLabel nameLabel = new JLabel("用户名", JLabel.CENTER);
         nameLabel.setFont(new Font("楷体", Font.PLAIN, 14));
-        JTextField nameField = new JTextField();
+        userNameField = new JTextField();
         JLabel pwLabel = new JLabel("密码", JLabel.CENTER);
         pwLabel.setFont(new Font("楷体", Font.PLAIN, 14));
-        JPasswordField pwField = new JPasswordField();
+        pwField = new JPasswordField();
         JPanel loginJpn = new JPanel();
         JButton loginButton = new JButton("登录");
         loginJpn.add(loginButton);
+        loginButton.addActionListener(new SubmitListener());
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         this.setLayout(gridBagLayout);
 
-        gridBagLayout.setConstraints(jLabel, new GBC(0, 0, 10, 9).setFill(GBC.BOTH));
-        gridBagLayout.setConstraints(nameLabel, new GBC(3, 10, 1, 2).setFill(GBC.BOTH));
-        gridBagLayout.setConstraints(nameField, new GBC(4, 10, 2, 2).setFill(GBC.BOTH));
-        gridBagLayout.setConstraints(pwLabel, new GBC(3, 12, 1, 2).setFill(GBC.BOTH));
-        gridBagLayout.setConstraints(pwField, new GBC(4, 12, 2, 2).setFill(GBC.BOTH));
+        //gridBagLayout.setConstraints(jLabel, new GBC(0, 0, 10, 9).setFill(GBC.BOTH));
+        gridBagLayout.setConstraints(nameLabel, new GBC(3, 10, 1, 2).setFill(GBC.HORIZONTAL));
+        gridBagLayout.setConstraints(userNameField, new GBC(4, 10, 2, 2).setFill(GBC.HORIZONTAL));
+        gridBagLayout.setConstraints(pwLabel, new GBC(3, 12, 1, 2).setFill(GBC.HORIZONTAL));
+        gridBagLayout.setConstraints(pwField, new GBC(4, 12, 2, 2).setFill(GBC.HORIZONTAL));
         gridBagLayout.setConstraints(loginJpn, new GBC(3, 14, 3, 2).setAnchor(GBC.CENTER));
 
-        this.add(jLabel);
+        //this.add(jLabel);
         this.add(nameLabel);
-        this.add(nameField);
+        this.add(userNameField);
         this.add(pwLabel);
         this.add(pwField);
         this.add(loginJpn);
+
+        this.setTitle("登录");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocation(DEFAULT_X, DEFAULT_Y);
+        this.setPreferredSize(new Dimension(435, 360));
+        this.pack();
+        this.setVisible(true);
     }
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             LoginFrame frame = new LoginFrame();
-            frame.setTitle("登录");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLocation(DEFAULT_X, DEFAULT_Y);
-            frame.setPreferredSize(new Dimension(435, 360));
-            frame.pack();
-            frame.setVisible(true);
         });
+    }
+
+    /**
+     *
+     */
+    private class SubmitListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String userName = userNameField.getText();
+            char[] password = pwField.getPassword();
+            if (userName.equals("Mr.x") && new String(password).equals("123456")) {
+                //销毁当前界面
+                LoginFrame.this.dispose();
+                //创建新界面
+                MainFrame.loadMainFrame();
+                NetServer.startServer();
+            }
+        }
     }
 }

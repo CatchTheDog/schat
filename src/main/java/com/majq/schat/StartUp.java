@@ -1,9 +1,8 @@
 package com.majq.schat;
 
-import com.majq.schat.component.MainFrame;
-import com.majq.schat.netservice.NetServer;
+import com.majq.schat.component.LoginFrame;
 
-import java.io.IOException;
+import java.awt.*;
 
 /**
  * 系统启动类
@@ -16,7 +15,7 @@ import java.io.IOException;
  * @since 2018/12/6 10:20
  */
 public class StartUp {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         startUp();
     }
 
@@ -24,7 +23,9 @@ public class StartUp {
      * 应用启动入口
      */
     public static void startUp() {
-        MainFrame.loadUI();
-        NetServer.startServer();
+        EventQueue.invokeLater(() -> {
+            new LoginFrame();
+        });
+
     }
 }

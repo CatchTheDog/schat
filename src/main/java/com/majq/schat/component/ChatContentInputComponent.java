@@ -116,7 +116,7 @@ public class ChatContentInputComponent extends JComponent {
     private class SendMessageListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ChatContentShowComponent chatContentShow = MainFrame.loadUI().getMainRightComponent().getMainRightCenter().getChatContentShow();
+            ChatContentShowComponent chatContentShow = MainFrame.loadMainFrame().getMainRightComponent().getMainRightCenter().getChatContentShow();
             if (null != contentInput.getText()) {
                 //发送消息给对方 需要将消息写入到socket中，但是此处无法获取在socket.
                 NetServer.socketMap.forEach((k, v) -> {

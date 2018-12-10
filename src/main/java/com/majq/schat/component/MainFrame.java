@@ -15,9 +15,9 @@ import java.util.Arrays;
  * @since 2018/12/4 17:09
  */
 public class MainFrame extends JFrame {
-    private MainRightComponent mainRightComponent;
     private static MainFrame mainFrame;
     private static Object lock = new Object();
+    private MainRightComponent mainRightComponent;
 
     /**
      * 窗口初始化
@@ -30,15 +30,14 @@ public class MainFrame extends JFrame {
 
     /**
      * UI初始化
+     *
      * @return
      */
-    public static MainFrame loadUI() {
+    public static MainFrame loadMainFrame() {
         if (null == mainFrame) {
             synchronized (lock) {
                 if (null == mainFrame)
-                    EventQueue.invokeLater(() -> {
-                        mainFrame = new MainFrame();
-                    });
+                    mainFrame = new MainFrame();
             }
         }
         return mainFrame;
