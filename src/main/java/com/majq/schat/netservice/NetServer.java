@@ -10,11 +10,12 @@ import java.util.Map;
 /**
  * 启动网络服务
  */
-public class NetServer {
+public class NetServer implements Runnable {
     public static Map<String, NetServerThread> socketMap = new HashMap<>();
     private static int i = 0;
 
-    public static void startServer() {
+    @Override
+    public void run() {
         ServerSocket socket = null;
         try {
             socket = new ServerSocket(8189);

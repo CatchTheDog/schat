@@ -37,10 +37,14 @@ public class LoginFrame extends JFrame {
         JLabel pwLabel = new JLabel("密码", JLabel.CENTER);
         pwLabel.setFont(new Font("楷体", Font.PLAIN, 14));
         pwField = new JPasswordField();
+
         JPanel loginJpn = new JPanel();
         JButton loginButton = new JButton("登录");
         loginJpn.add(loginButton);
         loginButton.addActionListener(new SubmitListener());
+
+        JButton register = new JButton("注册");
+        loginJpn.add(register);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         this.setLayout(gridBagLayout);
@@ -76,12 +80,26 @@ public class LoginFrame extends JFrame {
             String userName = userNameField.getText();
             char[] password = pwField.getPassword();
             if (userName.equals("Mr.x") && new String(password).equals("123456")) {
-                //创建新界面
-                MainFrame.loadMainFrame();
-                NetServer.startServer();
                 //销毁当前界面
                 LoginFrame.this.dispose();
+                EventQueue.invokeLater(() -> {
+                    //创建新界面
+                    MainFrame.loadMainFrame();
+                });
+                new Thread(new NetServer()).start(); //这里需要单独启用线程执行网络服务启动，如果不使用异步，则会阻塞UI加载
+            } else {
+                JOptionPane.showMessageDialog(LoginFrame.this, "您输入的用户名或者密码错误，请重新输入！", "用户名或者密码错误", 0);
             }
+        }
+    }
+
+    /**
+     * 点击注册按钮，跳转到注册界面
+     */
+    private class RegisterLister implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //弹出注册页面，用户注册完毕之后，需要再次登录
         }
     }
 }
