@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 /**
  * 登录窗口
- *
+ * 需要为添加到网格中的组件设置ipad，否则组件为默认大小，无法伸展
  * @author Mr.X
  * @version 1.0.0
  * @since 2018/12/6 17:02
@@ -46,11 +46,11 @@ public class LoginFrame extends JFrame {
         this.setLayout(gridBagLayout);
 
         //gridBagLayout.setConstraints(jLabel, new GBC(0, 0, 10, 9).setFill(GBC.BOTH));
-        gridBagLayout.setConstraints(nameLabel, new GBC(3, 10, 1, 2).setFill(GBC.HORIZONTAL));
-        gridBagLayout.setConstraints(userNameField, new GBC(4, 10, 2, 2).setFill(GBC.HORIZONTAL));
-        gridBagLayout.setConstraints(pwLabel, new GBC(3, 12, 1, 2).setFill(GBC.HORIZONTAL));
-        gridBagLayout.setConstraints(pwField, new GBC(4, 12, 2, 2).setFill(GBC.HORIZONTAL));
-        gridBagLayout.setConstraints(loginJpn, new GBC(3, 14, 3, 2).setAnchor(GBC.CENTER));
+        gridBagLayout.setConstraints(nameLabel, new GBC(3, 10, 1, 2).setFill(GBC.HORIZONTAL).setIpad(20, 0).setInsets(0, 2, 2, 0));
+        gridBagLayout.setConstraints(userNameField, new GBC(4, 10, 2, 2).setFill(GBC.HORIZONTAL).setIpad(100, 0).setInsets(0, 2, 2, 0));
+        gridBagLayout.setConstraints(pwLabel, new GBC(3, 12, 1, 2).setFill(GBC.HORIZONTAL).setIpad(20, 0).setInsets(0, 2, 2, 0));
+        gridBagLayout.setConstraints(pwField, new GBC(4, 12, 2, 2).setFill(GBC.HORIZONTAL).setIpad(100, 0).setInsets(0, 2, 2, 0));
+        gridBagLayout.setConstraints(loginJpn, new GBC(3, 14, 3, 2).setFill(GBC.BOTH).setAnchor(GBC.CENTER));
 
         //this.add(jLabel);
         this.add(nameLabel);
@@ -67,14 +67,8 @@ public class LoginFrame extends JFrame {
         this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            LoginFrame frame = new LoginFrame();
-        });
-    }
-
     /**
-     *
+     * 点击的登录按钮，对身份进行校验
      */
     private class SubmitListener implements ActionListener {
         @Override
@@ -82,11 +76,11 @@ public class LoginFrame extends JFrame {
             String userName = userNameField.getText();
             char[] password = pwField.getPassword();
             if (userName.equals("Mr.x") && new String(password).equals("123456")) {
-                //销毁当前界面
-                LoginFrame.this.dispose();
                 //创建新界面
                 MainFrame.loadMainFrame();
                 NetServer.startServer();
+                //销毁当前界面
+                LoginFrame.this.dispose();
             }
         }
     }
