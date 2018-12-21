@@ -1,12 +1,10 @@
 package com.majq.schat.component;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import javax.swing.*;
-
 import com.majq.schat.constant.FrameConstant;
 import com.majq.schat.utils.ImageUtils;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * 用户注册UI界面
@@ -19,7 +17,9 @@ public class RegisterFrame extends JFrame {
     private static final long serialVersionUID = 1L;
 
     public RegisterFrame(){
+        addComponent();
         initFrame();
+
     }
     /**
      * 初始化窗口
@@ -37,12 +37,13 @@ public class RegisterFrame extends JFrame {
      * 为窗口添加组件
      */
     private void addComponent(){
-        
+        this.setLayout(new BorderLayout());
+        this.add(new RegisterComponent(), BorderLayout.NORTH);
     }
 
     @Override
     public Dimension getPreferredSize(){
-        return new Dimension(FrameConstant.DEFAULT_WIDTH,FrameConstant.DEFAULT_HEIGHT);
+        return new Dimension(600, 600);
     }
 
      public static void main(String[] args) {
