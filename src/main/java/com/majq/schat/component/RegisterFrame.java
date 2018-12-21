@@ -25,7 +25,7 @@ public class RegisterFrame extends JFrame {
      * 初始化窗口
      */
     private void initFrame(){
-        this.setTitle("注册账号");
+        this.setTitle("注册");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(FrameConstant.DEFAULT_LOCATION_X,FrameConstant.DEFAULT_LOCATION_Y);
         this.setIconImage(ImageUtils.loadImage(FrameConstant.ICON_IMAGE_PATH));
