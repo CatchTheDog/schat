@@ -19,7 +19,6 @@ public class RegisterFrame extends JFrame {
     public RegisterFrame(){
         addComponent();
         initFrame();
-
     }
     /**
      * 初始化窗口
