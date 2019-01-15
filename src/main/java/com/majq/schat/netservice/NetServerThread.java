@@ -13,8 +13,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- * socket处理类
- * 在应用启动后，自动启动线程附着在应用上，用于接收聊天信息，并发送聊天信息
+ * socket处理类 在应用启动后，自动启动线程附着在应用上，用于接收聊天信息，并发送聊天信息
  *
  * @author Mr.X
  * @version 1.0.0
@@ -23,6 +22,7 @@ import java.util.Scanner;
  * @since 2018/12/6 11:05
  */
 public class NetServerThread implements Runnable {
+
     private Scanner in;
     private PrintWriter out;
     private Socket incoming;

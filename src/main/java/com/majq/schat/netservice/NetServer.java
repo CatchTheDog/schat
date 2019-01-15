@@ -1,6 +1,5 @@
 package com.majq.schat.netservice;
 
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,6 +10,7 @@ import java.util.Map;
  * 启动网络服务
  */
 public class NetServer implements Runnable {
+
     public static Map<String, NetServerThread> socketMap = new HashMap<>();
     private static int i = 0;
 

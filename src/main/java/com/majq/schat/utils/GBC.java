@@ -10,6 +10,7 @@ import java.awt.*;
  * @since 2018/11/30 9:23
  */
 public class GBC extends GridBagConstraints {
+
     /**
      * Constructs a GBC with a given gridx and gridy position and all other gird
      * bag constraint values set to the default
@@ -26,9 +27,9 @@ public class GBC extends GridBagConstraints {
      * Constructs a GBC with given gridx,gridy,gridwidth,gridheight and all
      * other grid bag constraint values set to default
      *
-     * @param gridx      the gridx position
-     * @param gridy      the gridy position
-     * @param gridwidth  the cell span in x-direction
+     * @param gridx the gridx position
+     * @param gridy the gridy position
+     * @param gridwidth the cell span in x-direction
      * @param gridheight the cell span in y-direction
      */
     public GBC(int gridx, int gridy, int gridwidth, int gridheight) {
@@ -87,10 +88,10 @@ public class GBC extends GridBagConstraints {
     /**
      * Sets the insets of this cell
      *
-     * @param top    the spacing to use to the top
-     * @param left   the spacing to use to the left
+     * @param top the spacing to use to the top
+     * @param left the spacing to use to the left
      * @param bottom the spacing to use to the bottom
-     * @param right  the spacing to use to the right
+     * @param right the spacing to use to the right
      * @return this object for further modification
      */
     public GBC setInsets(int top, int left, int bottom, int right) {

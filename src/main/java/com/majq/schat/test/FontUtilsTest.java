@@ -11,6 +11,7 @@ import java.awt.*;
  * @since 2018/12/6
  */
 public class FontUtilsTest {
+
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame();
@@ -20,6 +21,7 @@ public class FontUtilsTest {
     }
 
     private static class Test extends JComponent {
+
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;

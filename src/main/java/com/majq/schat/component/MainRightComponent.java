@@ -11,6 +11,7 @@ import java.awt.*;
  * @since 2018/12/5 10:06
  */
 public class MainRightComponent extends JComponent {
+
     private MainRightCenterComponent mainRightCenter;
 
     public MainRightComponent() {

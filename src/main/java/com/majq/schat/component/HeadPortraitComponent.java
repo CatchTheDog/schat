@@ -13,6 +13,7 @@ import java.awt.*;
  * @since 2018/12/5 9:48
  */
 public class HeadPortraitComponent extends JComponent {
+
     private static final int DEFAULT_WIDTH = FrameConstant.DEFAULT_WIDTH * 25 / 100;
     private static final int DEFAULT_HEIGHT = FrameConstant.DEFAULT_HEIGHT;
 

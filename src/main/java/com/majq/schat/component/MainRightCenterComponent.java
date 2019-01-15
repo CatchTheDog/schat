@@ -1,6 +1,5 @@
 package com.majq.schat.component;
 
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,6 +11,7 @@ import java.awt.*;
  * @since 2018/12/5 10:08
  */
 public class MainRightCenterComponent extends JComponent {
+
     private ChatContentShowComponent chatContentShow;
     private ChatContentInputComponent chatContentInput;
 

@@ -12,6 +12,7 @@ import java.net.URL;
  * @since 2018/12/5 14:18
  */
 public class ImageUtils {
+
     /**
      * 根据指定的路径加载图片
      *

@@ -15,6 +15,7 @@ import java.util.Arrays;
  * @since 2018/12/4 17:09
  */
 public class MainFrame extends JFrame {
+
     private static MainFrame mainFrame;
     private static Object lock = new Object();
     private MainRightComponent mainRightComponent;
@@ -36,8 +37,9 @@ public class MainFrame extends JFrame {
     public static MainFrame loadMainFrame() {
         if (null == mainFrame) {
             synchronized (lock) {
-                if (null == mainFrame)
+                if (null == mainFrame) {
                     mainFrame = new MainFrame();
+                }
             }
         }
         return mainFrame;

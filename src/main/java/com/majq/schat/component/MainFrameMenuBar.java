@@ -11,6 +11,7 @@ import java.awt.*;
  * @since 2018/12/5 10:06
  */
 public class MainFrameMenuBar {
+
     /**
      * 构造菜单栏
      *

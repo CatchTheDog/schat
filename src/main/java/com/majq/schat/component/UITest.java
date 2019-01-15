@@ -13,6 +13,7 @@ import java.awt.*;
  * @since 2018/12/20 15:00
  */
 public class UITest extends JFrame {
+
     public UITest() {
         this.setLayout(new GridBagLayout());
         JPanel toolSelectPanel = new JPanel();

@@ -13,6 +13,7 @@ import java.awt.*;
  * @since 2018/12/5 9:47
  */
 public class FunctionalBarComponent extends JComponent {
+
     private static final int DEFAULT_WIDTH = FrameConstant.DEFAULT_WIDTH * 75 / 100;
     private static final int DEFAULT_HEIGHT = FrameConstant.DEFAULT_HEIGHT * 5 / 100;
 

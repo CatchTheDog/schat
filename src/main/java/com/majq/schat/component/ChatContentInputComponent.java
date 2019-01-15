@@ -16,6 +16,7 @@ import java.awt.event.*;
  * @since 2018/12/5 9:45
  */
 public class ChatContentInputComponent extends JComponent {
+
     private static final int DEFAULT_WIDTH = FrameConstant.DEFAULT_WIDTH * 60 / 100;
     private static final int DEFAULT_HEIGHT = FrameConstant.DEFAULT_HEIGHT * 15 / 100;
     //聊天内容输入框
@@ -24,7 +25,6 @@ public class ChatContentInputComponent extends JComponent {
     private JButton sendMessage;
     //消息清除按钮
     private JButton clearMessage;
-
 
     public ChatContentInputComponent() {
         this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "信息输入"));
@@ -114,6 +114,7 @@ public class ChatContentInputComponent extends JComponent {
      * 发送信息事件监听器
      */
     private class SendMessageListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             ChatContentShowComponent chatContentShow = MainFrame.loadMainFrame().getMainRightComponent().getMainRightCenter().getChatContentShow();
@@ -133,6 +134,7 @@ public class ChatContentInputComponent extends JComponent {
      * 清除输入消息监听器
      */
     private class ClearMessageListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (null != contentInput.getText()) {
@@ -157,11 +159,11 @@ public class ChatContentInputComponent extends JComponent {
 //            System.out.println("触发事件caretPositionChanged了！");
 //        }
 //    }
-
     /**
      * 输入框焦点获取监听器
      */
     private class ContentInputFocusListener implements FocusListener {
+
         @Override
         public void focusGained(FocusEvent e) {
             contentInput.setText("");
