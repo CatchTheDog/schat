@@ -35,7 +35,18 @@ public class AdministrativeAreaRspBean {
      */
     private Object[] result;  //此处使用Object类型，因为数组嵌套，数组类型为Object.class,使用其他类型会报错
 
-    private List<ResultBean> results = new ArrayList<>();
+    /**
+     * 省级 行政区划
+     */
+    private List<ResultBean> provinceLevelResults = new ArrayList<>();
+    /**
+     * 县级行政区划
+     */
+    private List<ResultBean> prefectureLevelResults = new ArrayList<>();
+    /**
+     * 乡级行政区划
+     */
+    private List<ResultBean> countyLevelResults = new ArrayList<>();
 
     public Integer getStatus() {
         return status;
@@ -69,12 +80,28 @@ public class AdministrativeAreaRspBean {
         this.result = result;
     }
 
-    public List<ResultBean> getResults() {
-        return results;
+    public List<ResultBean> getProvinceLevelResults() {
+        return provinceLevelResults;
     }
 
-    public void setResults(List<ResultBean> results) {
-        this.results = results;
+    public void setProvinceLevelResults(List<ResultBean> provinceLevelResults) {
+        this.provinceLevelResults = provinceLevelResults;
+    }
+
+    public List<ResultBean> getPrefectureLevelResults() {
+        return prefectureLevelResults;
+    }
+
+    public void setPrefectureLevelResults(List<ResultBean> prefectureLevelResults) {
+        this.prefectureLevelResults = prefectureLevelResults;
+    }
+
+    public List<ResultBean> getCountyLevelResults() {
+        return countyLevelResults;
+    }
+
+    public void setCountyLevelResults(List<ResultBean> countyLevelResults) {
+        this.countyLevelResults = countyLevelResults;
     }
 
     @Override
@@ -84,7 +111,9 @@ public class AdministrativeAreaRspBean {
                 ", message='" + message + '\'' +
                 ", data_version='" + data_version + '\'' +
                 ", result=" + Arrays.toString(result) +
-                ", results=" + results +
+                ", provinceLevelResults=" + provinceLevelResults +
+                ", prefectureLevelResults=" + prefectureLevelResults +
+                ", countyLevelResults=" + countyLevelResults +
                 '}';
     }
 }

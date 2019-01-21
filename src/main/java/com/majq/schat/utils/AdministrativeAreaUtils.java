@@ -5,10 +5,7 @@ import com.majq.schat.beans.ResultBean;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Properties;
-import java.util.TreeMap;
+import java.util.*;
 
 import static com.majq.schat.utils.URLUtils.*;
 
@@ -42,7 +39,7 @@ public class AdministrativeAreaUtils {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    public static void requestChildrenInterface(String id) throws IOException, NoSuchAlgorithmException {
+    public static AdministrativeAreaRspBean requestChildrenInterface(String id) throws IOException, NoSuchAlgorithmException {
         Properties properties = readConf(null, null);
         String requestHost = (String) properties.get("requestHost");
         String requestPath = (String) properties.get("requestChildrenPath");
@@ -51,7 +48,8 @@ public class AdministrativeAreaUtils {
         TreeMap<String, String> params = new TreeMap<>();
         params.put("key", key);
         params.put("id", id);
-        System.out.print(requestURL(generateRequestURL(requestHost, requestPath, sk, params)));
+        String rsp = requestURL(generateRequestURL(requestHost, requestPath, sk, params));
+        return JsonUtils.parseObject(rsp, AdministrativeAreaRspBean.class);
     }
 
     /**
@@ -61,7 +59,7 @@ public class AdministrativeAreaUtils {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    public static void requestSearchInterface(String search) throws IOException, NoSuchAlgorithmException {
+    public static AdministrativeAreaRspBean requestSearchInterface(String search) throws IOException, NoSuchAlgorithmException {
         Properties properties = readConf(null, null);
         String requestHost = (String) properties.get("requestHost");
         String requestPath = (String) properties.get("requestSearchPath");
@@ -70,14 +68,19 @@ public class AdministrativeAreaUtils {
         TreeMap<String, String> params = new TreeMap<>();
         params.put("key", key);
         params.put("keyword", search);
-        System.out.print(requestURL(generateRequestURL(requestHost, requestPath, sk, params)));
+        String rsp = requestURL(generateRequestURL(requestHost, requestPath, sk, params));
+        return JsonUtils.parseObject(rsp, AdministrativeAreaRspBean.class);
     }
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-        AdministrativeAreaRspBean bean = requestListInterface();
-        Object[] resultBeans = bean.getResult();
-        for (Object obj : resultBeans) {
-            ArrayList<LinkedHashMap<String, Object>> list = (ArrayList<LinkedHashMap<String, Object>>) obj;
+    /**
+     * 从JackSon解析结果中获取ResultBean对象
+     *
+     * @param list 源对象集合
+     * @return 解析完成后对象集合
+     */
+    private static List<ResultBean> parseResult(ArrayList<LinkedHashMap<String, Object>> list) {
+        List<ResultBean> resultBeans = new ArrayList<>();
+        if (null != list && list.size() > 0) {
             for (LinkedHashMap<String, Object> element : list) {
                 ResultBean resultBean = new ResultBean();
                 resultBean.setId(Integer.valueOf((String) element.get("id")));
@@ -86,9 +89,36 @@ public class AdministrativeAreaUtils {
                 resultBean.setPinyin((ArrayList<String>) element.get("pinyin"));
                 resultBean.setLocation((LinkedHashMap<String, Double>) element.get("location"));
                 resultBean.setCidx((ArrayList<Integer>) element.get("cidx"));
-                bean.getResults().add(resultBean);
+                resultBeans.add(resultBean);
             }
         }
-        System.out.print(bean);
+        return resultBeans;
+    }
+
+    /**
+     * 转换响应对象为指定响应模型对象
+     *
+     * @param rspBean 响应对象
+     * @return 转换后对象
+     */
+    private static void transferAdministrativeAreaRsp(AdministrativeAreaRspBean rspBean) {
+        Object[] resultBeans = rspBean.getResult();
+        for (int i = 0; i < resultBeans.length; i++) {
+            ArrayList<LinkedHashMap<String, Object>> list = (ArrayList<LinkedHashMap<String, Object>>) resultBeans[i];
+            if (i == 0)
+                rspBean.setProvinceLevelResults(parseResult(list));
+            else if (i == 1)
+                rspBean.setPrefectureLevelResults(parseResult(list));
+            else if (i == 2)
+                rspBean.setCountyLevelResults(parseResult(list));
+        }
+    }
+
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+        AdministrativeAreaRspBean bean = requestListInterface();
+        transferAdministrativeAreaRsp(bean);
+        System.out.println(bean.getCountyLevelResults());
+        System.out.println(bean.getPrefectureLevelResults().get(0));
+        System.out.println(bean.getProvinceLevelResults());
     }
 }
