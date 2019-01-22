@@ -5,7 +5,10 @@
  */
 package com.majq.schat.component;
 
+import com.majq.schat.beans.AdministrativeAreaRspBean;
+import com.majq.schat.beans.ResultBean;
 import com.majq.schat.constant.FrameConstant;
+import com.majq.schat.utils.AdministrativeAreaUtils;
 import com.majq.schat.utils.FileUtils;
 import com.majq.schat.utils.ImageUtils;
 
@@ -16,12 +19,14 @@ import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.stream.Collectors;
 
 /**
  * 注册页面
+ *
  * @author Mr.X
- * @since 2019/01/10
  * @version 1.0.0
+ * @since 2019/01/10
  */
 public class RegisterFrame extends javax.swing.JFrame {
 
@@ -31,9 +36,9 @@ public class RegisterFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private java.awt.Canvas canvas1;
-    private java.awt.Choice choice1;
-    private java.awt.Choice choice2;
-    private java.awt.Choice choice4;
+    private javax.swing.JComboBox<String> choice1;
+    private javax.swing.JComboBox<String> choice2;
+    private javax.swing.JComboBox<String> choice4;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -63,7 +68,7 @@ public class RegisterFrame extends javax.swing.JFrame {
     /**
      * Creates new form TestFrame
      */
-    public RegisterFrame(LoginFrame loginFrame) {
+    public RegisterFrame(LoginFrame loginFrame) throws Exception {
         this.loginFrame = loginFrame;
         initComponents();
         this.addWindowListener(new WindowAdapter() {
@@ -84,7 +89,7 @@ public class RegisterFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() throws Exception {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         menuBar1 = new java.awt.MenuBar();
@@ -103,8 +108,6 @@ public class RegisterFrame extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jRadioButton3 = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
-        choice1 = new java.awt.Choice();
-        choice2 = new java.awt.Choice();
         jLabel5 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
@@ -112,7 +115,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         canvas1 = new java.awt.Canvas();
         jButton3 = new javax.swing.JButton();
-        choice4 = new java.awt.Choice();
+        choice4 = new javax.swing.JComboBox<>();
         jPanel1 = new MyPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -123,12 +126,35 @@ public class RegisterFrame extends javax.swing.JFrame {
         menu2.setLabel("Edit");
         menuBar1.add(menu2);
 
-        choice1.add("select");
-        choice1.add("not now");
-        choice2.add("select");
-        choice2.add("not now");
-        choice4.add("select");
-        choice4.add("not now");
+        //获取行政区划三级
+        AdministrativeAreaRspBean bean = AdministrativeAreaUtils.getAdministrativeAreaList();
+        java.util.List<String> provinceStrList = bean.getProvinceLevelResults().stream().map(resultBean -> resultBean.getFullname()).collect(Collectors.toList());
+        java.util.List<String> prefectureStrList = bean.getPrefectureLevelResults().stream().map(resultBean -> resultBean.getFullname()).collect(Collectors.toList());
+        choice1 = new javax.swing.JComboBox(provinceStrList.toArray());
+        choice2 = new javax.swing.JComboBox(prefectureStrList.toArray());
+        choice4 = new javax.swing.JComboBox<>();
+        choice4.addItem("请选择");
+        choice1.addItemListener(itvt -> {
+            ResultBean province = bean.getProvinceLevelResults().get(provinceStrList.indexOf(itvt.getItem()));
+            choice2.removeAllItems();
+            choice4.removeAllItems();
+            java.util.List<String> tempStrs = prefectureStrList.subList(province.getCidx().get(0), province.getCidx().get(1));
+            for (String str : tempStrs) {
+                choice2.addItem(str);
+            }
+        });
+        choice2.addItemListener((itvt -> {
+            ResultBean prefecture = bean.getPrefectureLevelResults().get(prefectureStrList.indexOf(itvt.getItem()));
+            choice4.removeAllItems();
+            try {
+                AdministrativeAreaRspBean counties = AdministrativeAreaUtils.getAdminnistrativeAreaChildren(prefecture.getId().toString());
+                for (ResultBean resultBean : counties.getProvinceLevelResults()) {
+                    choice4.addItem(resultBean.getFullname());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
 
 
         jLabel1.setFont(new java.awt.Font("楷体", 0, 14)); // NOI18N
@@ -232,7 +258,8 @@ public class RegisterFrame extends javax.swing.JFrame {
 
         jButton1.setText("提交");
         jButton1.addActionListener(evt -> {
-
+            //将注册信息提交后台
+            
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

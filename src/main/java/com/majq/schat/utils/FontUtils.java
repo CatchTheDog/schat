@@ -30,7 +30,7 @@ public class FontUtils {
      * 根据路径加载指定字体
      *
      * @param fontType 字体类型
-     * @param path 字体所在路径
+     * @param path     字体所在路径
      * @return 加载完成的字体
      */
     public static Font loadFont(Integer fontType, String path) throws IOException, FontFormatException {
@@ -47,7 +47,7 @@ public class FontUtils {
      * 获取指定大小的字体
      *
      * @param fontType 字体类型
-     * @param path 字体所在路径
+     * @param path     字体所在路径
      * @return 指定大小字体
      */
     public static Font getSpecificSizeFont(Integer fontType, String path, Integer size) throws IOException, FontFormatException {
@@ -58,8 +58,8 @@ public class FontUtils {
      * 根据字符串、画笔属性、字体获取字符串描述信息
      *
      * @param messasge 字符串
-     * @param g2 画笔属性
-     * @param font 字体
+     * @param g2       画笔属性
+     * @param font     字体
      * @return 字符串描述属性
      */
     public static FontDescriptor getFontDescription(String messasge, Graphics2D g2, Font font) {

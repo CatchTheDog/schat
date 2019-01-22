@@ -290,7 +290,11 @@ public class LoginFrame extends JFrame {
             //LoginFrame.this.dispose();
             EventQueue.invokeLater(() -> {
                 LoginFrame.this.setEnabled(false);
-                new RegisterFrame(LoginFrame.this);
+                try {
+                    new RegisterFrame(LoginFrame.this);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             });
         }
     }

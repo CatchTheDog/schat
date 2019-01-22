@@ -2,9 +2,8 @@ package com.majq.schat.utils;
 
 import com.majq.schat.beans.AdministrativeAreaRspBean;
 import com.majq.schat.beans.ResultBean;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import static com.majq.schat.utils.URLUtils.*;
@@ -18,58 +17,80 @@ import static com.majq.schat.utils.URLUtils.*;
 public class AdministrativeAreaUtils {
 
     /**
-     * 请求腾讯地图 省县乡 三级行政区划   接口：https://apis.map.qq.com/ws/district/v1/list
+     * 发送请求并解析响应
+     *
+     * @param requestHost 请求主机
+     * @param requestPath 请求路径
+     * @param sk          sk
+     * @param params      参数
+     * @return 解析后的响应对象
+     * @throws Exception
      */
-    public static AdministrativeAreaRspBean requestListInterface() throws IOException, NoSuchAlgorithmException {
-        Properties properties = readConf(null, null);
-        String requestHost = (String) properties.get("requestHost");
-        String requestPath = (String) properties.get("requestListPath");
-        String key = (String) properties.get("key");
-        String sk = (String) properties.get("sk");
-        TreeMap<String, String> params = new TreeMap<>();
-        params.put("key", key);
+    private static AdministrativeAreaRspBean sendReqSp(String requestHost, String requestPath, String sk, TreeMap<String, String> params) throws Exception {
         String rsp = requestURL(generateRequestURL(requestHost, requestPath, sk, params));
-        return JsonUtils.parseObject(rsp, AdministrativeAreaRspBean.class);
+        return transferAdministrativeAreaRsp(rsp);
     }
 
     /**
-     * 请求腾讯地图 省县乡 三级行政区划 接口：https://apis.map.qq.com/ws/district/v1/getchildren
+     * 请求腾讯讯地图 省县乡 三级行政区划
+     * 接口：https://apis.map.qq.com/ws/district/v1/list  无需其他额外参数
+     * https://apis.map.qq.com/ws/district/v1/getchildren 需要传入id
+     * https://apis.map.qq.com/ws/district/v1/search 需要传入keyword
+     *
+     * @param requestPathKey 请求接口路径在配置文件中的key
+     * @param params         参数集合，需要在外部构造然后传入
+     * @return 接口响应结果对象
+     * @throws Exception
+     */
+    private static AdministrativeAreaRspBean getAdministrativeAreaInfo(String requestPathKey, TreeMap<String, String> params) throws Exception {
+        if (StringUtils.isNotBlank(requestPathKey) && null != params) {
+            Properties properties = readConf(null, null);
+            String requestHost = (String) properties.get("requestHost");
+            String requestPath = (String) properties.get(requestPathKey);
+            String key = (String) properties.get("key");
+            String sk = (String) properties.get("sk");
+            params.put("key", key);
+            return sendReqSp(requestHost, requestPath, sk, params);
+        } else
+            throw new IllegalArgumentException("reqeustPathKey & params can't be null !");
+
+    }
+
+    /**
+     * 获取行政区划 list
+     *
+     * @return
+     * @throws Exception
+     */
+    public static AdministrativeAreaRspBean getAdministrativeAreaList() throws Exception {
+        TreeMap<String, String> params = new TreeMap<>();
+        return getAdministrativeAreaInfo("requestListPath", params);
+    }
+
+    /**
+     * 获取子级行政区划列表
      *
      * @param id 父级行政区id
-     * @throws IOException
-     * @throws NoSuchAlgorithmException
+     * @return 子级行政区划列表
+     * @throws Exception
      */
-    public static AdministrativeAreaRspBean requestChildrenInterface(String id) throws IOException, NoSuchAlgorithmException {
-        Properties properties = readConf(null, null);
-        String requestHost = (String) properties.get("requestHost");
-        String requestPath = (String) properties.get("requestChildrenPath");
-        String key = (String) properties.get("key");
-        String sk = (String) properties.get("sk");
+    public static AdministrativeAreaRspBean getAdminnistrativeAreaChildren(String id) throws Exception {
         TreeMap<String, String> params = new TreeMap<>();
-        params.put("key", key);
         params.put("id", id);
-        String rsp = requestURL(generateRequestURL(requestHost, requestPath, sk, params));
-        return JsonUtils.parseObject(rsp, AdministrativeAreaRspBean.class);
+        return getAdministrativeAreaInfo("requestChildrenPath", params);
     }
 
     /**
-     * 请求腾讯地图 省县乡 三级行政区划 接口：https://apis.map.qq.com/ws/district/v1/search
+     * 根据关键词搜索行政区划信息
      *
-     * @param search 行政区划名称搜索关键词
-     * @throws IOException
-     * @throws NoSuchAlgorithmException
+     * @param keyword 搜索关键词
+     * @return 匹配的行政区划信息
+     * @throws Exception
      */
-    public static AdministrativeAreaRspBean requestSearchInterface(String search) throws IOException, NoSuchAlgorithmException {
-        Properties properties = readConf(null, null);
-        String requestHost = (String) properties.get("requestHost");
-        String requestPath = (String) properties.get("requestSearchPath");
-        String key = (String) properties.get("key");
-        String sk = (String) properties.get("sk");
+    public static AdministrativeAreaRspBean getAdministrativeAreaSearch(String keyword) throws Exception {
         TreeMap<String, String> params = new TreeMap<>();
-        params.put("key", key);
-        params.put("keyword", search);
-        String rsp = requestURL(generateRequestURL(requestHost, requestPath, sk, params));
-        return JsonUtils.parseObject(rsp, AdministrativeAreaRspBean.class);
+        params.put("keyword", keyword);
+        return getAdministrativeAreaInfo("requestSearchPath", params);
     }
 
     /**
@@ -98,27 +119,33 @@ public class AdministrativeAreaUtils {
     /**
      * 转换响应对象为指定响应模型对象
      *
-     * @param rspBean 响应对象
-     * @return 转换后对象
+     * @param rsp 响应结果字符串
+     * @return 转换后的响应结果
      */
-    private static void transferAdministrativeAreaRsp(AdministrativeAreaRspBean rspBean) {
-        Object[] resultBeans = rspBean.getResult();
-        for (int i = 0; i < resultBeans.length; i++) {
-            ArrayList<LinkedHashMap<String, Object>> list = (ArrayList<LinkedHashMap<String, Object>>) resultBeans[i];
-            if (i == 0)
-                rspBean.setProvinceLevelResults(parseResult(list));
-            else if (i == 1)
-                rspBean.setPrefectureLevelResults(parseResult(list));
-            else if (i == 2)
-                rspBean.setCountyLevelResults(parseResult(list));
-        }
+    private static AdministrativeAreaRspBean transferAdministrativeAreaRsp(String rsp) throws Exception {
+        if (StringUtils.isNotBlank(rsp)) {
+            AdministrativeAreaRspBean rspBean = JsonUtils.parseObject(rsp, AdministrativeAreaRspBean.class);
+            if (rspBean.getStatus() == 0) {
+                Object[] resultBeans = rspBean.getResult();
+                for (int i = 0; i < resultBeans.length; i++) {
+                    ArrayList<LinkedHashMap<String, Object>> list = (ArrayList<LinkedHashMap<String, Object>>) resultBeans[i];
+                    if (i == 0)
+                        rspBean.setProvinceLevelResults(parseResult(list));
+                    else if (i == 1)
+                        rspBean.setPrefectureLevelResults(parseResult(list));
+                    else if (i == 2)
+                        rspBean.setCountyLevelResults(parseResult(list));
+                }
+                return rspBean;
+            } else
+                throw new Exception("请求地区行政区划接口数据异常！");
+        } else
+            throw new IllegalArgumentException("rsp is null !");
+
     }
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-        AdministrativeAreaRspBean bean = requestListInterface();
-        transferAdministrativeAreaRsp(bean);
-        System.out.println(bean.getCountyLevelResults());
-        System.out.println(bean.getPrefectureLevelResults().get(0));
-        System.out.println(bean.getProvinceLevelResults());
+    public static void main(String[] args) throws Exception {
+        AdministrativeAreaRspBean rspBean = getAdministrativeAreaList();
+        System.out.println(rspBean.getProvinceLevelResults());
     }
 }
