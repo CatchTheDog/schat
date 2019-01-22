@@ -29,7 +29,6 @@ public class JDBCConnectionPool {
      * 连接池内连接集合
      */
     private List<Connection> connections = new ArrayList<>();
-
     /**
      * 请求队列
      */
