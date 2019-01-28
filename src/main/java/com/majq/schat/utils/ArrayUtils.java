@@ -39,11 +39,13 @@ public class ArrayUtils {
      * @param newLength 新数组长度
      * @return 复制完成后数组
      */
-    public static Object arrayCopy(Object array, int newLength) {
+    public static Object arrayCopy(Object array, Integer newLength) {
+        if (null == array) throw new IllegalArgumentException("array can't be null!");
         Class arrayClass = array.getClass();
         if (!arrayClass.isArray()) return null;
         Class componentType = arrayClass.getComponentType();
         int len = Array.getLength(array);
+        newLength = (null == newLength || newLength == 0) ? len : newLength;
         Object newArray = Array.newInstance(componentType, newLength);
         System.arraycopy(array, 0, newArray, 0, Math.min(len, newLength));
         return newArray;

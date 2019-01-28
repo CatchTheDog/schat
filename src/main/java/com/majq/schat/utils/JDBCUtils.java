@@ -1,3 +1,4 @@
+/*
 package com.majq.schat.utils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,41 +9,297 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * @author Mr.X
  * @version 1.0.0
  * JDBC工具类
+ * @param driverClassName 数据库驱动程序类名
+ * @param url             数据库URL
+ * @param username        用户名
+ * @param password        密码
+ * @return 数据库连接
+ * @throws ClassNotFoundException 数据库驱动未找到
+ * @throws SQLException           创建连接异常
+ * <p>
+ * 执行简单——非预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ * <p>
+ * 组装查询结果对象
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ * <p>
+ * 执行预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ * <p>
+ * 关闭数据库连接
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ * <p>
+ * sql执行结果描述对象
+ * <p>
+ * 受影响的行数
+ * <p>
+ * 查询结果集合
+ * @param driverClassName 数据库驱动程序类名
+ * @param url             数据库URL
+ * @param username        用户名
+ * @param password        密码
+ * @return 数据库连接
+ * @throws ClassNotFoundException 数据库驱动未找到
+ * @throws SQLException           创建连接异常
+ * <p>
+ * 执行简单——非预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ * <p>
+ * 组装查询结果对象
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ * <p>
+ * 执行预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ * <p>
+ * 关闭数据库连接
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ * <p>
+ * sql执行结果描述对象
+ * <p>
+ * 受影响的行数
+ * <p>
+ * 查询结果集合
+ * @param driverClassName 数据库驱动程序类名
+ * @param url             数据库URL
+ * @param username        用户名
+ * @param password        密码
+ * @return 数据库连接
+ * @throws ClassNotFoundException 数据库驱动未找到
+ * @throws SQLException           创建连接异常
+ * <p>
+ * 执行简单——非预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ * <p>
+ * 组装查询结果对象
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ * <p>
+ * 执行预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ * <p>
+ * 关闭数据库连接
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ * <p>
+ * sql执行结果描述对象
+ * <p>
+ * 受影响的行数
+ * <p>
+ * 查询结果集合
+ * @param driverClassName 数据库驱动程序类名
+ * @param url             数据库URL
+ * @param username        用户名
+ * @param password        密码
+ * @return 数据库连接
+ * @throws ClassNotFoundException 数据库驱动未找到
+ * @throws SQLException           创建连接异常
+ * <p>
+ * 执行简单——非预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ * <p>
+ * 组装查询结果对象
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ * <p>
+ * 执行预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ * <p>
+ * 关闭数据库连接
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ * <p>
+ * sql执行结果描述对象
+ * <p>
+ * 受影响的行数
+ * <p>
+ * 查询结果集合
+ * @param driverClassName 数据库驱动程序类名
+ * @param url             数据库URL
+ * @param username        用户名
+ * @param password        密码
+ * @return 数据库连接
+ * @throws ClassNotFoundException 数据库驱动未找到
+ * @throws SQLException           创建连接异常
+ * <p>
+ * 执行简单——非预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ * <p>
+ * 组装查询结果对象
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ * <p>
+ * 执行预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ * <p>
+ * 关闭数据库连接
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ * <p>
+ * sql执行结果描述对象
+ * <p>
+ * 受影响的行数
+ * <p>
+ * 查询结果集合
+ * @param driverClassName 数据库驱动程序类名
+ * @param url             数据库URL
+ * @param username        用户名
+ * @param password        密码
+ * @return 数据库连接
+ * @throws ClassNotFoundException 数据库驱动未找到
+ * @throws SQLException           创建连接异常
+ * <p>
+ * 执行简单——非预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ * <p>
+ * 组装查询结果对象
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ * <p>
+ * 执行预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ * <p>
+ * 关闭数据库连接
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ * <p>
+ * sql执行结果描述对象
+ * <p>
+ * 受影响的行数
+ * <p>
+ * 查询结果集合
  * @since 2019/01/22 14:50
- */
+ * <p>
+ * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
+ * <p>
+ * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
+ * <p>
+ * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
+ * <p>
+ * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
+ * <p>
+ * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
+ * <p>
+ * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
+ *//*
+
 public class JDBCUtils {
-    /**
-     * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
-     *
-     * @param driverClassName 数据库驱动程序类名
-     * @param url             数据库URL
-     * @param username        用户名
-     * @param password        密码
-     * @return 数据库连接
-     * @throws ClassNotFoundException 数据库驱动未找到
-     * @throws SQLException           创建连接异常
-     */
+    */
+/**
+ * 根据传入驱动信息，连接URL，用户名，密码信息 创建数据库连接
+ *
+ * @param driverClassName 数据库驱动程序类名
+ * @param url             数据库URL
+ * @param username        用户名
+ * @param password        密码
+ * @return 数据库连接
+ * @throws ClassNotFoundException 数据库驱动未找到
+ * @throws SQLException           创建连接异常
+ * <p>
+ * 执行简单——非预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ * <p>
+ * 组装查询结果对象
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ * <p>
+ * 执行预编译sql
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ * <p>
+ * 关闭数据库连接
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ * <p>
+ * sql执行结果描述对象
+ * <p>
+ * 受影响的行数
+ * <p>
+ * 查询结果集合
+ *//*
+
     public static Connection getConnection(String driverClassName, String url, String username, String password) throws ClassNotFoundException, SQLException {
         Class.forName(driverClassName);
         Connection connection = DriverManager.getConnection(url, username, password);
         return connection;
     }
 
-    /**
-     * 执行简单——非预编译sql
-     *
-     * @param connection 数据库连接
-     * @param sql        待执行sql
-     * @return ExecuteSQLResult sql执行结果描述对象
-     * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
-     * execute 执行任意sql,通常用于执行用户提供的交互式查询
-     * executeQuery 执行SELECT查询
-     */
-    public static List<ExecuteSQLResult> excuteStatementSQL(Connection connection, String sql) throws SQLException {
+    */
+/**
+ * 执行简单——非预编译sql
+ *
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @return ExecuteSQLResult sql执行结果描述对象
+ * executeUpdate 执行INSERT,UPDATE,DELETE,CREATE TABLE,DROP TABLE 之类的定义语句等
+ * execute 执行任意sql,通常用于执行用户提供的交互式查询
+ * executeQuery 执行SELECT查询
+ *//*
+
+    public static ExecuteSQLResult excuteStatementSQL(Connection connection, String sql) throws SQLException {
 
         if (null != connection && StringUtils.isNotBlank(sql)) {
             Statement statement = connection.createStatement();
@@ -52,13 +309,15 @@ public class JDBCUtils {
             throw new IllegalArgumentException("connection ,sql cann't be null !");
     }
 
-    /**
-     * 组装查询结果对象
-     *
-     * @param statement sql执行对象
-     * @return 查询结果对象
-     */
-    private static List<ExecuteSQLResult> assembleResult(boolean hasResultSet, Statement statement) throws SQLException {
+    */
+/**
+ * 组装查询结果对象
+ *
+ * @param statement sql执行对象
+ * @return 查询结果对象
+ *//*
+
+    private static <T> List<T> assembleResult(boolean hasResultSet, Statement statement,Class<T> targetClass) throws SQLException {
         ResultSet resultSet = null;
         try {
             List<ExecuteSQLResult> results = new ArrayList<>();
@@ -78,21 +337,23 @@ public class JDBCUtils {
                 results.add(executeSQLResult);
                 hasResultSet = statement.getMoreResults(); //与execute()方法一致，如果下一结果集是ResultSet，则返回true.
             }
-            return results;
+            //使用反射组装bean
         } finally {
             if (null != resultSet) resultSet.close();
             if (null != statement) statement.close();
         }
     }
 
-    /**
-     * 执行预编译sql
-     *
-     * @param connection 数据库连接
-     * @param sql        待执行sql
-     * @param args       sql编译参数
-     * @return sql 执行结果描述对象
-     */
+    */
+/**
+ * 执行预编译sql
+ *
+ * @param connection 数据库连接
+ * @param sql        待执行sql
+ * @param args       sql编译参数
+ * @return sql 执行结果描述对象
+ *//*
+
     public static List<ExecuteSQLResult> executeSQLResult(Connection connection, String sql, Map<String, Object> args) throws SQLException {
         if (null != connection && StringUtils.isNotBlank(sql) && null != args && args.size() > 0) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -192,28 +453,36 @@ public class JDBCUtils {
     }
 
 
-    /**
-     * 关闭数据库连接
-     *
-     * @param connection 待关闭数据库连接
-     * @throws SQLException 关闭数据库连接异常
-     */
+    */
+/**
+ * 关闭数据库连接
+ *
+ * @param connection 待关闭数据库连接
+ * @throws SQLException 关闭数据库连接异常
+ *//*
+
     public static void closeConnection(Connection connection) throws SQLException {
         if (connection != null)
             connection.close();
     }
 
-    /**
-     * sql执行结果描述对象
-     */
+    */
+/**
+ * sql执行结果描述对象
+ *//*
+
     public static class ExecuteSQLResult {
-        /**
-         * 受影响的行数
-         */
+        */
+/**
+ * 受影响的行数
+ *//*
+
         private int affectedRowsNum;
-        /**
-         * 查询结果集合
-         */
+        */
+/**
+ * 查询结果集合
+ *//*
+
         private ResultSet resultSet;
 
         public int getAffectedRowsNum() {
@@ -240,4 +509,19 @@ public class JDBCUtils {
                     '}';
         }
     }
+
+    public static void main(String [] args) throws SQLException, ClassNotFoundException {
+        Connection connection = getConnection("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost/test1?serverTimezone=GMT%2B8","root","mr!@#$x");
+        List<ExecuteSQLResult> results = excuteStatementSQL(connection,"select * from user");
+        for(ExecuteSQLResult executeSQLResult : results){
+            System.out.println(executeSQLResult.getAffectedRowsNum());
+            ResultSet resultSet = executeSQLResult.getResultSet();
+            if(null != resultSet){
+                if(resultSet.next()){
+                    System.out.println(resultSet.getInt(1));
+                }
+            }
+        }
+    }
 }
+*/
